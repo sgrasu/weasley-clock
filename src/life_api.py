@@ -55,6 +55,7 @@ def parse_member(member):
         info['name'] = location['name'] 
         battery = location['battery']
         info['battery_critical'] = (battery is None or int(battery) < 5)
+        info['driving'] = location['isDriving']
     return info
 
 def family_info(auth_token,circle_id):
