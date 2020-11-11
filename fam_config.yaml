@@ -1,0 +1,21 @@
+elle:
+  idx: 0
+  range: 2160
+  min: 700
+  max: 2135
+jenne:
+  idx: 1
+  range: 2160
+  min: 700
+  max: 2143
+becky:
+  idx: 2
+  range: 2160
+  min: 700
+  max: 2115
+htb:
+  idx: 3
+  range: 2160
+  min: 700
+  max: 2175
+

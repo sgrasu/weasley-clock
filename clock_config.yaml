@@ -1,0 +1,29 @@
+face:
+  home: 1
+  travel: 
+    pos: 0
+  work: 2
+  gym: 3
+  battery: 4
+  lost: 5
+hands:
+  elle:
+    servo: 0
+    range: 2160
+    min: 700
+    max: 2135
+  jenne:
+    servo: 1
+    range: 2160
+    min: 700
+    max: 2143
+  becky:
+    servo: 2
+    range: 2160
+    min: 700
+    max: 2115
+  htb:
+    servo: 3
+    range: 2160
+    min: 700
+    max: 2175
