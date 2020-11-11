@@ -11,8 +11,10 @@ from requests.auth import HTTPBasicAuth
 USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) '\
     'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'
 
+
 class LogoutError(Exception):
     pass
+
 
 def reauthenticate(f):
     def wrapper(session):
@@ -23,19 +25,25 @@ def reauthenticate(f):
             return f(session)
     return wrapper
 
+
 class Life360Session:
     family_id = os.environ["LIFE360_CIRCLE"]
+
     def __init__(self):
         self.access_token = None
         self.authenticate()
+
     def authenticate(self):
         self.access_token = authenticate()
+
     @reauthenticate
     def family(self):
         return family_info(self.access_token, self.family_id)
+
     @reauthenticate
     def circles(self):
         return circles(self.access_token)
+
 
 def log_and_retry(f):
     def wrapper(*args):
@@ -48,7 +56,7 @@ def log_and_retry(f):
             except LogoutError:
                 logging.info("credentials expired")
                 raise
-            except:
+            except BaseException:
                 logging.error("Unknown error: %s", sys.exc_info()[0])
                 raise
             finally:
@@ -57,6 +65,7 @@ def log_and_retry(f):
                     quit()
                 retry += 1
     return wrapper
+
 
 @log_and_retry
 def authenticate():
@@ -68,24 +77,28 @@ def authenticate():
     response = requests.post(
         'https://www.life360.com/v3/oauth2/token',
         data={'username': user, 'password': pas, 'grant_type': 'password'},
-        headers={'Accept': 'application/json', 'User-Agent' : USER_AGENT},
+        headers={'Accept': 'application/json', 'User-Agent': USER_AGENT},
         auth=HTTPBasicAuth(basicauth_user, basicauth_pass))
     if response.status_code == 403:
         logging.error("incorrect auth: %s", response.json()['errorMessage'])
         quit()
-    else:
-        return response.json()['access_token']
+    return response.json()['access_token']
+
 
 @log_and_retry
 def get(auth_token, endpoint):
     auth = 'Bearer ' + auth_token
-    response = requests.get('https://www.life360.com/v3/' + endpoint,
-    headers={'Accept': 'application/json', 'User-Agent' : USER_AGENT, \
-        'Authorization' : auth})
+    response = requests.get(
+        'https://www.life360.com/v3/' + endpoint,
+        headers={
+            'Accept': 'application/json',
+            'User-Agent': USER_AGENT,
+            'Authorization': auth})
     if response.status_code != 200:
         if response.status_code == 401:
             raise LogoutError
     return response.json()
+
 
 def circles(auth_token):
     response = get(auth_token, 'circles')
@@ -96,6 +109,7 @@ def get_circle(auth_token, circle_id):
     response = get(auth_token, 'circles/' + circle_id)
     return response
 
+
 def parse_member(member):
     info = {}
     location = member['location']
@@ -105,11 +119,13 @@ def parse_member(member):
         info['battery_critical'] = (battery is None or float(battery) < 5)
         info['driving'] = bool(int(location['isDriving']))
     info['location'] = 'battery' if info['battery_critical'] \
-                        else 'driving' if info['driving'] \
-                        else info['name'].split('-')[-1].strip().lower() if info['name'] \
-                        else 'lost'
+        else 'driving' if info['driving'] \
+        else info['name'].split('-')[-1].strip().lower() if info['name'] \
+        else 'lost'
     return info
 
-def family_info(auth_token,circle_id):
+
+def family_info(auth_token, circle_id):
     circle = get_circle(auth_token, circle_id)
-    return {member['firstName'].lower() : parse_member(member) for member in circle['members']}
+    return {member['firstName'].lower(): parse_member(member)
+            for member in circle['members']}
