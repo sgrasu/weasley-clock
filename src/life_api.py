@@ -106,7 +106,7 @@ def parse_member(member):
         info['driving'] = bool(int(location['isDriving']))
     info['location'] = 'battery' if info['battery_critical'] \
                         else 'driving' if info['driving'] \
-                        else info['name'] if info['name'] \
+                        else info['name'].split('-')[-1].strip().lower() if info['name'] \
                         else 'lost'
     return info
 

@@ -24,9 +24,9 @@ def next_angle(curr, dest):
     if -180 <= pos_curr - pos_dest <= 180:
         next = curr_rotations * 360 + pos_dest
     elif 180 <= pos_curr - pos_dest <= 360:
-        if curr_rotations >= MAX_ROTATIONS:
+        if curr_rotations + 1 >= MAX_ROTATIONS:
             next = curr_rotations * 360 + pos_dest
-        else: next = (curr_rotations + 1) * 360
+        else: next = (curr_rotations + 1) * 360 + pos_dest
     elif -360 <= pos_curr - pos_dest <= -180:
         if curr_rotations <= 0:
             next = curr_rotations * 360 + pos_dest

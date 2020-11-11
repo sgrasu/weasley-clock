@@ -42,6 +42,6 @@ def start_clock_service():
 
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    start_clock_service()
 
