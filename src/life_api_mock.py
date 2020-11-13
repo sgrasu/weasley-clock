@@ -3,12 +3,7 @@ for testing clock"""
 
 import random
 import yaml
-
-with open("clock_config.yaml", 'r') as stream:
-    try:
-        CLOCK = yaml.safe_load(stream)
-    except yaml.YAMLError as exc:
-        CLOCK = None
+from common import CLOCK
 
 class Life360Session:
 

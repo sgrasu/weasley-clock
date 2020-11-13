@@ -1,20 +1,12 @@
 import logging
 import time
-import yaml
 import common
 if not common.debugging:
     from life_api import Life360Session
 else:
     from life_api_mock import Life360Session
 import servos
-
-
-with open("clock_config.yaml", 'r') as stream:
-    try:
-        CLOCK = yaml.safe_load(stream)
-    except yaml.YAMLError as exc:
-        CLOCK = None
-        logging.error(exc)
+from common import CLOCK
 
 
 def hand_position(location, **_):

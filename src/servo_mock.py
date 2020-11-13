@@ -14,11 +14,12 @@ class Servo:
     def angle(self, new_angle):
         old_angle = self._angle
         self._angle = new_angle
+        assert (new_angle / 2) % 1 == 0
         logging.debug(
             "servo %s changed from %s to %s",
             self.idx,
-            old_angle,
-            new_angle)
+            old_angle / 2,
+            new_angle / 2)
 
 
 class ServoKit:

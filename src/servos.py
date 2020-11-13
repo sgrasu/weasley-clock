@@ -4,9 +4,14 @@ try:
 except NotImplementedError:
     assert common.debugging
     from servo_mock import ServoKit
+from common import CLOCK
+
 
 MAX_ROTATIONS = 2
 kit = ServoKit(channels=16)
+SERVO_COUNT = 4
+assert 360 % len(CLOCK['face']) == 0
+QUADRANT_ANGLE = 360 // len(CLOCK['face'])
 
 
 def set_servo_angle(servo, angle):
@@ -14,34 +19,41 @@ def set_servo_angle(servo, angle):
 
 
 def current_angle(servo):
-    return kit.servo[servo].angle
+    return int(kit.servo[servo].angle // 2)
 
 
 def face_2_angle(region):
-    return region * 30
+    return region * QUADRANT_ANGLE
+
+def unit_angle(angle):
+    return angle % 360 - angle % QUADRANT_ANGLE
+
+def calculate_offset(num):
+    return num * QUADRANT_ANGLE / SERVO_COUNT
 
 
-def next_angle(curr, dest):
-    pos_curr = curr % 360
-    pos_dest = dest % 360
+def next_angle(servo, curr, dest):
+    pos_curr = unit_angle(curr)
+    servos_in_quadrant = len([x for x in range(SERVO_COUNT) if x < servo and unit_angle(current_angle(x)) == unit_angle(dest)])
+    pos_dest = (dest + calculate_offset(servos_in_quadrant)) % 360
     curr_rotations = curr // 360
     if -180 <= pos_curr - pos_dest <= 180:
-        next = curr_rotations * 360 + pos_dest
+        nxt_rotations = curr_rotations * 360
     elif 180 <= pos_curr - pos_dest <= 360:
         if curr_rotations + 1 >= MAX_ROTATIONS:
-            next = curr_rotations * 360 + pos_dest
+            nxt_rotations = curr_rotations * 360
         else:
-            next = (curr_rotations + 1) * 360 + pos_dest
+            nxt_rotations = (curr_rotations + 1) * 360
     elif -360 <= pos_curr - pos_dest <= -180:
         if curr_rotations <= 0:
-            next = curr_rotations * 360 + pos_dest
+            nxt_rotations = curr_rotations * 360
         else:
-            next = (curr_rotations - 1) * 360
+            nxt_rotations = (curr_rotations - 1) * 360
     else:
-        next = dest
-    return next
+        nxt_rotations = 0
+    return nxt_rotations + pos_dest
 
 
 def move_hand(servo, region):
-    angle = next_angle(current_angle(servo), face_2_angle(region))
+    angle = next_angle(servo, current_angle(servo), face_2_angle(region))
     set_servo_angle(servo, angle)
