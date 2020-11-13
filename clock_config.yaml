@@ -1,7 +1,6 @@
 face:
   home: 1
-  travel: 
-    pos: 0
+  travel: 0
   work: 2
   gym: 3
   battery: 4
