@@ -2,7 +2,6 @@
 for testing clock"""
 
 import random
-import yaml
 from common import CLOCK
 
 class Life360Session:
