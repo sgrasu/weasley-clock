@@ -29,7 +29,8 @@ def unit_angle(angle):
     return angle % 360 - angle % QUADRANT_ANGLE
 
 def calculate_offset(num):
-    return num * QUADRANT_ANGLE / SERVO_COUNT
+    offset = QUADRANT_ANGLE / (SERVO_COUNT + 2)
+    return offset * [0, -1, 1, 2][num]  #alternating offset
 
 
 def next_angle(servo, curr, dest):
