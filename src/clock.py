@@ -1,8 +1,11 @@
 import logging
 import time
 import yaml
-from life_api import Life360Session
 import common
+if not common.debugging:
+    from life_api import Life360Session
+else:
+    from life_api_mock import Life360Session
 import servos
 
 
