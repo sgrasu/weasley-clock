@@ -1,7 +1,6 @@
 """Life 360 mock
 for testing clock"""
 
-import math
 import random
 import yaml
 
@@ -31,7 +30,7 @@ def authenticate():
     return "we dont care"
 
 
-def circles(auth_token):
+def circles():
     return ["1234-567-890"]
 
 
