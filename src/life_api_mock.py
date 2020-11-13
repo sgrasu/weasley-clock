@@ -10,7 +10,6 @@ with open("clock_config.yaml", 'r') as stream:
         CLOCK = yaml.safe_load(stream)
     except yaml.YAMLError as exc:
         CLOCK = None
-        logging.error(exc)
 
 class Life360Session:
 
