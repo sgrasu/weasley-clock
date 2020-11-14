@@ -13,8 +13,7 @@ SERVO_COUNT = 4
 assert 360 % len(CLOCK['face']) == 0
 QUADRANT_ANGLE = 360 // len(CLOCK['face'])
 
-for person in CLOCK['hands']:
-    print(person)
+for name, person in CLOCK['hands'].items():
     servo = kit.servo[person['servo']]
     servo.actuation_range = person['range']
     servo.set_pulse_width_range(person['min'], person['max'])
