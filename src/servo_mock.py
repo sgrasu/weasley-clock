@@ -5,6 +5,10 @@ class Servo:
     def __init__(self, idx):
         self.idx = idx
         self._angle = 0
+        self.actuation_range = 0
+
+    def set_pulse_width_range(self, min, max):
+        pass
 
     @property
     def angle(self):

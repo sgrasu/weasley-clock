@@ -38,6 +38,7 @@ def calculate_offset(num):
 
 
 def next_angle(servo, curr, dest):
+    print(dest)
     pos_curr = unit_angle(curr)
     servos_in_quadrant = len([x for x in range(SERVO_COUNT) if x < servo and unit_angle(current_angle(x)) == unit_angle(dest)])
     pos_dest = (dest + calculate_offset(servos_in_quadrant)) % 360
@@ -56,6 +57,7 @@ def next_angle(servo, curr, dest):
             nxt_rotations = (curr_rotations - 1) * 360
     else:
         nxt_rotations = 0
+    print("conv:", nxt_rotations, pos_dest)
     return nxt_rotations + pos_dest
 
 
