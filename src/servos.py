@@ -13,6 +13,11 @@ SERVO_COUNT = 4
 assert 360 % len(CLOCK['face']) == 0
 QUADRANT_ANGLE = 360 // len(CLOCK['face'])
 
+for person in CLOCK['hands']:
+    servo = kit.servo[person['servo']]
+    servo.actuation_range = person['range']
+    servo.set_pulse_width_range(person['min'], person['max'])
+
 
 def set_servo_angle(servo, angle):
     kit.servo[servo].angle = angle * 2  # gear ratio of 2 from servo to hand
@@ -30,7 +35,7 @@ def unit_angle(angle):
 
 def calculate_offset(num):
     offset = QUADRANT_ANGLE / (SERVO_COUNT + 2)
-    return offset * [0, -1, 1, 2][num]  #alternating offset
+    return offset * [0, 1, -1, 2][num]  #alternating offset
 
 
 def next_angle(servo, curr, dest):
