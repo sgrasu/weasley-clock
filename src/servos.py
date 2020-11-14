@@ -16,6 +16,7 @@ QUADRANT_ANGLE = 360 // len(CLOCK['face'])
 for name, person in CLOCK['hands'].items():
     kit.servo[person['servo']].actuation_range = person['range']
     kit.servo[person['servo']].set_pulse_width_range(person['min'], person['max'])
+    kit.servo[person['servo']].angle = 0
 
 
 def set_servo_angle(servo, angle):
