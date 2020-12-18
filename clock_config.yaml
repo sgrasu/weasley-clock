@@ -1,14 +1,14 @@
 face:
   work: 0
-  store: 1
-  friends: 2
-  battery: 3
-  home: 4
-  driving: 5
-  gym: 6
-  restaurant: 7
-  lost: 8
-  dunno: 9
+  lost: 1
+  gym: 2
+  other: 3
+  driving: 4
+  home: 5
+  battery: 6
+  friends: 7
+  restaurant: 8
+  store: 9
 hands:
   elle:
     servo: 0
