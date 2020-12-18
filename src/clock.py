@@ -43,6 +43,5 @@ def start_clock_service():
         time.sleep(common.interval)
 
 
-# if __name__ == "__main__":
-#    logging.basicConfig(filename='clock.log', encoding='utf-8', level=logging.DEBUG)
-#    start_clock_service()
+if __name__ == "__main__":
+   start_clock_service()
