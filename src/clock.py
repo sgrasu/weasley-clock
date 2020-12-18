@@ -9,6 +9,11 @@ import servos
 from common import CLOCK
 
 
+def zero_hands():
+    for servo in range(3):
+        servos.set_servo_angle(servo, 0)
+        
+
 def hand_position(location, **_):
     return CLOCK['face'].get(location, CLOCK['face']['lost'])
 
