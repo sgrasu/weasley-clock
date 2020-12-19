@@ -1,5 +1,6 @@
 import logging
 import time
+import sys
 import common
 if not common.debugging:
     from life_api import Life360Session
@@ -49,4 +50,10 @@ def start_clock_service():
 
 
 if __name__ == "__main__":
-   start_clock_service()
+    if len(sys.argv) > 1:
+        if sys.argv[1] == '--zero-hands':
+            zero_hands()
+        else:
+            print("--zero-hands to zero clock, otherwise pass no flags to start")
+    else:
+        start_clock_service()

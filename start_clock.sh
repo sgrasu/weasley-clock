@@ -1,3 +1,3 @@
 #!/bin/sh
 source .env
-python3 src/clock.py
+python3 src/clock.py $1
