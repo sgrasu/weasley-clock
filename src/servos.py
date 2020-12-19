@@ -30,8 +30,10 @@ def current_angle(servo):
 def face_2_angle(region):
     return region * QUADRANT_ANGLE
 
+
 def unit_angle(angle):
-    return angle % 360 - angle % QUADRANT_ANGLE
+    return round((angle % 360) / QUADRANT_ANGLE) * QUADRANT_ANGLE
+
 
 def calculate_offset(num):
     offset = QUADRANT_ANGLE / (SERVO_COUNT + 2)
