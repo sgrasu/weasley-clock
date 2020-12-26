@@ -116,7 +116,7 @@ def parse_member(member):
     if location:
         info['name'] = location['name'].lower() if location['name'] else "lost"
         battery = location['battery']
-        info['battery_critical'] = (battery is None or float(battery) < 5)
+        info['battery_critical'] = (battery is None or float(battery) <= 10)
         info['driving'] = location['speed'] > 13
     info['location'] = 'battery' if info['battery_critical'] \
         else 'driving' if info['driving'] \

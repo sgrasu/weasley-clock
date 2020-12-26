@@ -13,13 +13,13 @@ hands:
   elle:
     servo: 0
     range: 2160
-    min: 700
-    max: 2150
+    min: 650
+    max: 2145
   jenne:
     servo: 1
     range: 2160
     min: 700
-    max: 2177
+    max: 2120
   becky:
     servo: 2
     range: 2160
@@ -28,5 +28,5 @@ hands:
   htb:
     servo: 3
     range: 2160
-    min: 700
-    max: 2135
+    min: 710
+    max: 2145
