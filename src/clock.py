@@ -16,7 +16,7 @@ def zero_hands():
         
 
 def hand_position(location, **_):
-    return CLOCK['face'].get(location, CLOCK['face']['lost'])
+    return CLOCK['face'].get(location, CLOCK['face']['other'])
 
 
 def move_hand(servo, location_data):
